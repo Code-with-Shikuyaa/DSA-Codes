@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    int data;
+    struct node *prev, *next;
+};
+
+struct linklist
+{
+    struct node *head, *tail;
+};
+
+void insert(struct linklist *t, int x)
+{
+    struct node *temp;
+    temp = (struct node *) malloc(sizeof(struct node));
+    temp->data = x;
+    temp->next = NULL;
+    if (t->head == NULL)
+    {
+         t->head = t->tail = temp;
+         temp->prev = NULL;
+    }
+    else
+    {
+        t->tail->next = temp;
+        temp->prev = t->tail;
+        t->tail = temp;
+    }
+
+}
+
+void displayforward(struct linklist *t)
+{
+    struct node *temp;
+    temp = t->head;
+    while (temp != NULL)
+    {
+        printf("%d\n" , temp->data);
+        temp = temp->next;
+    }
+}
+
+void displaybackward(struct linklist *t)
+{
+    struct node *temp;
+    temp = t->tail;
+    while (temp != NULL)
+    {
+        printf("%d\n" , temp->data);
+        temp = temp->prev;
+    }
+}
+
+int main()
+{
+    struct linklist h;
+    h.head = NULL;
+    h.tail = NULL;
+    insert(&h, 22);
+    insert(&h, 44);
+    insert(&h, 13);
+    insert(&h, 33);
+    printf("Linklist in forward direction\n");
+    displayforward(&h);
+    printf("Linklist in backward direction\n");
+    displaybackward(&h);
+    return 0;
+}
