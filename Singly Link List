@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    int data;
+    struct node *next;
+};
+
+struct linklist
+{
+    struct node *head, *tail;
+};
+
+void insert(struct linklist *t, int x)
+{
+    struct node *temp;
+    temp = (struct node *) malloc(sizeof(struct node));
+    temp->data = x;
+    temp->next = NULL;
+    if (t->head == NULL)
+        t->head = t->tail = temp;
+    else
+    {
+        t->tail->next = temp;
+        t->tail = temp;
+    }
+
+}
+
+void display(struct linklist *t)
+{
+    struct node *temp;
+    temp = t->head;
+    while (temp != NULL)
+    {
+        printf("%d\n" , temp->data);
+        temp = temp->next;
+    }
+}
+
+void search(struct linklist *t, int x)
+{
+    struct node *temp;
+    temp = t->head;
+    while (temp != NULL && temp->data != x)
+        temp = temp->next;
+
+    if (temp == NULL)
+        printf("Data not found\n");
+    else
+        printf("Data found\n");
+}
+
+void deletenode(struct linklist *t, int x)
+{
+    struct node *a,*b;
+    a = b = t->head;
+    while (a != NULL && a->data != x)
+    {
+        b = a;
+        a = a ->next;
+    }
+
+    if (a == NULL)
+        printf("Data not found\n");
+    else
+    {
+        if (a == t->head)
+            t->head = t->head->next;
+        else
+            if (a == t->tail)
+            {
+                b->next = NULL;
+                t->tail = b;
+            }
+            else
+                b->next = a->next;
+
+    }
+}
+
+int main()
+{
+    struct linklist h;
+    h.head = NULL;
+    h.tail = NULL;
+    insert(&h, 10);
+    insert(&h, 20);
+    insert(&h, 30);
+    insert(&h, 40);
+    insert(&h, 50);
+    insert(&h, 60);
+    deletenode(&h, 30);
+    deletenode(&h, 10);
+    deletenode(&h , 60);
+    display(&h);
+    return 0;
+}
