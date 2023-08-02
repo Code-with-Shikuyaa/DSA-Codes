@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    int data;
+    struct node *next;
+};
+
+struct stack
+{
+    struct node *top;
+};
+
+void push(struct stack *t, int x)
+{
+    struct node *temp;
+    temp = (struct node *) malloc(sizeof(struct node));
+    temp->data = x;
+    if (t->top == NULL)
+        temp->next = NULL;
+    else
+        temp->next = t->top;
+    t->top = temp;
+
+}
+
+void display(struct stack *t)
+{
+    struct node *temp;
+    temp = t->top;
+    while (temp != NULL)
+    {
+        printf("%d\n" , temp->data);
+        temp = temp->next;
+    }
+}
+
+void pop(struct stack *t)
+{
+    struct node *a;
+
+    if (t->top == NULL)
+        printf("Stack underflow\n");
+    else
+    {
+        a = t->top;
+        t->top = t->top->next;
+        printf("Data popped = %d\n" , a->data);
+        free(a);
+    }
+}
+
+int main()
+{
+    struct stack s;
+    s.top  = NULL;
+    push(&s, 10);
+    push(&s, 20);
+    push(&s, 30);
+    push(&s, 40);
+
+    display(&s);
+
+    pop(&s);
+    display(&s);
+    return 0;
+}
