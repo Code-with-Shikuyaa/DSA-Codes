@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node
+{
+    int data;
+    struct node *left,*right;
+};
+
+struct tree
+{
+    struct node *root;
+};
+
+void insert(struct tree *t, int x)
+{
+    struct node *temp, *a, *b;
+    temp = (struct node *) malloc(sizeof(struct node));
+    temp->data = x;
+    temp->left = temp->right = NULL;
+    if (t->root == NULL)
+    {
+        t->root = temp;
+        return;
+    }
+    a = b = t->root;
+    while (a != NULL)
+    {
+        b = a;
+        if (temp->data < a->data)
+            a = a->left;
+        else
+            a = a->right;
+    }
+    if (temp->data < b->data)
+        b->left = temp;
+    else
+        b->right = temp;
+}
+
+void inorder(struct node *temp)
+{
+    if (temp != NULL)
+    {
+        inorder(temp->left);
+        printf("%d " , temp->data);
+        inorder(temp->right);
+    }
+}
+
+void preorder(struct node *temp)
+{
+    if (temp != NULL)
+    {
+        printf("%d " , temp->data);
+        preorder(temp->left);
+        preorder(temp->right);
+    }
+}
+
+void postorder(struct node *temp)
+{
+    if (temp != NULL)
+    {
+        postorder(temp->left);
+        postorder(temp->right);
+        printf("%d " , temp->data);
+    }
+}
+
+int main()
+{
+
+    struct tree t;
+    t.root = NULL;
+    insert(&t,10);
+    insert(&t,5);
+    insert(&t,20);
+    insert(&t,8);
+    insert(&t,2);
+    insert(&t,25);
+    printf("\nInorder\n");
+    inorder(t.root);
+    printf("\nPreorder\n");
+    preorder(t.root);
+    printf("\nPostorder\n");
+    postorder(t.root);
+
+    return 0;
+}
